@@ -10,6 +10,8 @@ import {
 import ContactListItem from '../components/ContactListItem';
 
 import { fetchContacts } from '../utils/api';
+//import {Database} from "../database/database";
+import db from "../database/db";
 
 const keyExtractor = ({ phone }) => phone;
 
@@ -21,6 +23,10 @@ export default class Contacts extends React.Component {
   };
 
   async componentDidMount() {
+    console.log("Before");
+    //console.log(await db.execute("SELECT * FROM tags"));
+    //db.createTag("Test1");
+    console.log((await db.findAllTagsWithNameLike("Test")).rows);
     try {
       const contacts = await fetchContacts();
 

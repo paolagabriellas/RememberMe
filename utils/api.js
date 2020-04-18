@@ -2,6 +2,7 @@ import uuidv4 from 'uuid/v4';
 
 import capitalize from '../utils/capitalize';
 
+
 const mapContact = contact => {
   const {
     name, picture, phone, cell, email,
@@ -21,7 +22,6 @@ const mapContact = contact => {
 export const fetchContacts = async () => {
   const response = await fetch('https://randomuser.me/api/?results=100&seed=fullstackio');
   const contactData = await response.json();
-
   return contactData.results.map(mapContact);
 };
 
