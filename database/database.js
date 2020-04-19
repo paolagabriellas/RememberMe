@@ -262,6 +262,7 @@ export class Database {
         return result;
     }
 
+    //Updates a contact's info
     async updateContact(id,name=null,appearance=null, demeanor=null, interests=null, firstMeet=null, dateOfMeet=null,birthday=null,major=null,job=null,description=null,other=null,imagePath=null) {
         try
             {
@@ -290,6 +291,7 @@ export class Database {
         }
     }
 
+    //Gets all tags for a contact
     async getAllTagsForContact(contactID) {
         var result = null;
         try 
@@ -305,6 +307,7 @@ export class Database {
         return result;
     }
 
+    //Gets all contacts that have a particular tag
     async getAllContactsWithTag(tagID) {
         var result = null;
         try 
@@ -320,6 +323,7 @@ export class Database {
         return result;
     }
 
+    //Gets all the different relationships from ContactsTagged
     async getAllFromContactsTagged() {
         var result = null;
         try 
@@ -335,6 +339,7 @@ export class Database {
         return result;
     }
 
+    //Adds a tag to the the contact
     async addTagToContact(tagID, contactID) {
         var result = null;
         try 
@@ -342,7 +347,7 @@ export class Database {
             result = await this.execute("INSERT INTO ContactsTagged (contactID, tagID)\
                                 VALUES(?, ?);",[contactID,tagID] );
         
-            console.log(result);
+            //console.log(result);
         }
         catch(e)
         {
@@ -352,6 +357,7 @@ export class Database {
         return result;
     }
 
+    //Deletes a tag from a contact
     async deleteTagFromContact(tagID, contactID) {
         try
         {
@@ -365,6 +371,7 @@ export class Database {
         }
     }
 
+    //Removes this contact from all tags (called when a contact is deleted)
     async deleteAllOfOneContact(contactID) {
         try
         {
@@ -377,6 +384,7 @@ export class Database {
         }
     }
 
+    //Removes this tag from all contacts (called when a tag is deleted)
     async deleteAllOfOneTag(tagID) {
         try
         {
