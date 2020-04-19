@@ -23,8 +23,11 @@ export default class Contacts extends React.Component {
   };
 
   async componentDidMount() {
-    console.log("Before");
+    //TODO: REMOVE THIS - TESTING PURPOSES fOR DB
+    console.log("Before database tests");
     DBTest.doAllTests();
+
+
     try {
       const contacts = await fetchContacts();
 
