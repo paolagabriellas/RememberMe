@@ -7,7 +7,4 @@ export default async function(connection) {
         color text not null
       )`
     );
-    await connection.execute(
-      `create unique index uk_tags_name on tags (name)`
-    );
   }

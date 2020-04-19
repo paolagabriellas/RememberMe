@@ -13,10 +13,8 @@ export default async function(connection) {
         major text,
         job text,
         description text,
-        other text
+        other text,
+        imagePath text
       )`
-    );
-    await connection.execute(
-      `create unique index uk_contact_name on tags (name)`
     );
   }

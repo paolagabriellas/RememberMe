@@ -70,67 +70,71 @@ export class Database {
 
     //Creates a tag if it doesn't exist or replaces it if it already exists 
     async createTag(name, color="blue") {
+        var result = null;
         try 
         {
-            var result = await this.execute("INSERT OR REPLACE INTO tags (name, color)\
+            result = await this.execute("INSERT INTO tags (name, color) \
             VALUES(? , ?);", [name,color]);
-            console.log(result); 
+            //console.log(result); 
         }
         catch(e)
         {
+            console.log(e);
             console.log("Error in createTag");
         }  
+        return result;
     }
 
     //Updates the tag based on id
-    //Returns null if an error occurred else a result set
+    //Nothing gets returned
     async updateTag(id, name ="", color="") {
-        var result = null;
-        if (name == "" && color == "")
+        if (name === "" && color === "")
         {
             console.log("No updates to be made.");
             return;
         }
-        else if (name != "" && color != "") //Both are getting changed
+        else if (name !== "" && color !== "") //Both are getting changed
         {
             try
             {
-                result = await this.execute("UPDATE tags\
-                                            SET  name = ?, color = ?\
-                                            WHERE tagID = ?;", [name,color, id]);
+                await this.execute("UPDATE tags \
+                                    SET  name = ?, color = ? \
+                                    WHERE tagID = ?;", [name,color, id]);
             }
             catch (e)
             {
-                console.log("Error on trying to update a tag - updateTag");
+                console.log(e);
+                console.log("Error on trying to update a tag - updateTag1");
             }
         }
-        else if (name != "" && color == "")
+        else if (name !== "" && color === "")
         {
             try
             {
-                result = await this.execute("UPDATE tags\
-                                             SET  name = ?\
-                                             WHERE tagID = ?;", [name, id]);
+                await this.execute("UPDATE tags \
+                                    SET  name = ? \
+                                    WHERE tagID = ?;", [name, id]);
             }
             catch (e)
             {
-                console.log("Error on trying to update a tag - updateTag");
+                console.log(e);
+                console.log("Error on trying to update a tag - updateTag2");
             }
         }
-        else if (name == "" && color != "")
+        else if (name === "" && color !== "")
         {
             try
             {
-                result = await this.execute("UPDATE tags\
-                                             SET  color = ?\
-                                             WHERE tagID = ?;", [color, id]);
+                await this.execute("UPDATE tags \
+                                    SET  color = ? \
+                                    WHERE tagID = ?;", [color, id]);
             }
             catch (e)
             {
-                console.log("Error on trying to update a tag - updateTag");
+                console.log(e);
+                console.log("Error on trying to update a tag - updateTag3");
             }
         }
-        return result;
     }
 
     //Returns null if unsuccessful or a ResultSet of tags if successful.
@@ -142,10 +146,27 @@ export class Database {
         }
         catch(e)
         {
+            console.log(e);
             console.log("Error in getAllTags");
         }
         return result;
     }
+
+    async getTag(id) {
+        var result = null;
+        try 
+        {
+            //console.log(typeof(id));
+            result = await this.execute("SELECT * FROM tags WHERE tagID = ?;", [id]);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in getTag");
+        }
+        return result;
+    }
+
     
     //This one is vulnerable to SQL injections, because I couldn't figure out how to use the like operator with the ? syntax
     //Returns null on an error otherwise a ResultSet.
@@ -162,17 +183,209 @@ export class Database {
         return result;
     }
 
-    async createContact(name, appearance=null, demeanor=null, interests=null, firstMeet=null, dateOfMeet=null,birthday=null,major=null,job=null,description=null,other=null)
-    {
+    //Deletes tag with id; void
+    async deleteTag(id) {
         try 
         {
-            var result = await this.execute("INSERT OR REPLACE INTO tags (name, color)\
-            VALUES(? , ?);", [name,color]);
-            console.log(result); 
+            await this.deleteAllOfOneTag(id);
+            await this.execute("DELETE FROM tags WHERE tagID = ?", Array.of(id));
         }
         catch(e)
         {
+            console.log(e)
+            console.log("Error in deleteTag");
+        }  
+    }
+
+    //Creates a contact. Requires a name, all other parameters are optional
+    async createContact(name, appearance="", demeanor="", interests="", firstMeet="", dateOfMeet="",birthday="",major="",job="",description="",other="",imagePath="")
+    {
+        var result = null;
+        try 
+        {
+            result = await this.execute("INSERT INTO contacts (name, appearance,demeanor,interests,firstMeet,dateOfMeet,birthday,major,job,description,other,imagePath)\
+                                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [name,appearance,demeanor,interests,firstMeet,dateOfMeet,birthday,major,job,description,other,imagePath]);
+        
+            //console.log(result);
+        }
+        catch(e)
+        {
+            console.log(e);
             console.log("Error in createTag");
+        }
+        return result;
+    }
+
+    //Gets all the data for a contact with id
+    async getContact(id) {
+        var result = null;
+        try 
+        {
+            result = await this.execute("SELECT * FROM contacts WHERE contactID = ?;", Array.of(id));
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in getContact");
+        }
+        return result;
+    }
+
+    //Gets all of the contacts listed by name alphabetically; returns an array in the ResultSet
+    async getAllContacts(){
+        var result = null
+        try 
+        {
+            result = await this.execute("SELECT * FROM contacts ORDER BY name ASC;");
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in getAllContacts");
+        }
+        return result;
+    }
+
+    //This one is vulnerable to SQL injections, because I couldn't figure out how to use the like operator with the ? syntax
+    //Returns null on an error otherwise a ResultSet.
+    async findAllContactsWithNameLike(name) {
+        var result = null;
+        try 
+        {
+            result = await this.execute("SELECT * FROM contacts WHERE name LIKE \"%" +  name + "%\";");
+        }
+        catch(e)
+        {
+            console.log(e)
+            console.log("Error in findAllTagsWithNameLike");
+        }
+        return result;
+    }
+
+    async updateContact(id,name=null,appearance=null, demeanor=null, interests=null, firstMeet=null, dateOfMeet=null,birthday=null,major=null,job=null,description=null,other=null,imagePath=null) {
+        try
+            {
+                await this.execute("UPDATE contacts \
+                                    SET  name = coalesce(?, name), appearance = coalesce(?, appearance), demeanor = coalesce(?, demeanor), interests = coalesce(?, interests), firstMeet = coalesce(?, firstMeet), dateOfMeet = coalesce(?, dateOfMeet), birthday = coalesce(?, birthday), major = coalesce(?, major), job = coalesce(?, job), description = coalesce(?, description), other = coalesce(?, other), imagePath = coalesce(?, imagePath)\
+                                    WHERE contactID = ?;", [name, appearance,demeanor, interests, firstMeet, dateOfMeet,birthday,major,job,description,other,imagePath, id]);
+            }
+            catch (e)
+            {
+                console.log(e);
+                console.log("Error on trying to update a tag - updateTag3");
+            }
+    }
+
+    //Deletes a contact by their id; void; automatically deletes all tags from it.
+    async deleteContact(id){
+        try
+        {
+            await this.deleteAllOfOneContact(id);
+            await this.execute("DELETE FROM contacts WHERE contactID = ?;", [id]);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in deleteContact");
+        }
+    }
+
+    async getAllTagsForContact(contactID) {
+        var result = null;
+        try 
+        {
+            result = await this.execute("SELECT * FROM ContactsTagged WHERE contactID = ?", [contactID]);
+            //console.log(result);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in getAllTagsForContact");
+        }
+        return result;
+    }
+
+    async getAllContactsWithTag(tagID) {
+        var result = null;
+        try 
+        {
+            result = await this.execute("SELECT * FROM ContactsTagged WHERE tagID = ?", [tagID]);
+            //console.log(result);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in getAllContactsWithTag");
+        }
+        return result;
+    }
+
+    async getAllFromContactsTagged() {
+        var result = null;
+        try 
+        {
+            result = await this.execute("SELECT * FROM ContactsTagged");
+            //console.log(result);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in getAllFromContactsTagged");
+        }
+        return result;
+    }
+
+    async addTagToContact(tagID, contactID) {
+        var result = null;
+        try 
+        {
+            result = await this.execute("INSERT INTO ContactsTagged (contactID, tagID)\
+                                VALUES(?, ?);",[contactID,tagID] );
+        
+            console.log(result);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in addTagToContact");
+        }
+        return result;
+    }
+
+    async deleteTagFromContact(tagID, contactID) {
+        try
+        {
+            await this.execute("DELETE FROM ContactsTagged \
+                                WHERE contactID = ? AND tagID = ?;", [contactID, tagID]);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in deleteTagFromContact");
+        }
+    }
+
+    async deleteAllOfOneContact(contactID) {
+        try
+        {
+            await this.execute("DELETE FROM ContactsTagged WHERE contactID = ?;", [contactID]);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in deleteAllOfOneContact");
+        }
+    }
+
+    async deleteAllOfOneTag(tagID) {
+        try
+        {
+            await this.execute("DELETE FROM ContactsTagged WHERE tagID = ?;", [tagID]);
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("Error in deleteAllOfOneTag");
         }
     }
 

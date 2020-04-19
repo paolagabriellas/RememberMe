@@ -3,11 +3,12 @@ import {Database} from "./database";
 import users from "./users";
 import tags from "./tags";
 import contacts from "./contacts";
+import contactsTagged from "./contactsTagged"
 
 //When adding new migrations in already deployed app, append them to the end of array, do not re-arrange
 //Do not modify migration after app version containing it is published
 //These are the tables to create
-const migrations = [null, users, tags,contacts];
+const migrations = [null, users, tags, contacts, contactsTagged];
 const migrationsTable = "_migrations";
 
 //Constant representing the database that you should de
