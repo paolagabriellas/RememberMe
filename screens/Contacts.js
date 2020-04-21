@@ -8,12 +8,9 @@ import {
 } from 'react-native';
 
 import ContactListItem from '../components/ContactListItem';
+import db from "../database/db";
+//import {DBTest} from "../database/dbTests";
 
-import { fetchContacts } from '../utils/api';
-//import {Database} from "../database/database";
-import {DBTest} from "../database/dbTests";
-
-const keyExtractor = ({ phone }) => phone;
 
 export default class Contacts extends React.Component {
   state = {
@@ -24,12 +21,17 @@ export default class Contacts extends React.Component {
 
   async componentDidMount() {
     //TODO: REMOVE THIS - TESTING PURPOSES fOR DB
-    console.log("Before database tests");
-    DBTest.doAllTests();
+    //console.log("Before database tests");
+    //DBTest.doAllTests();
 
 
     try {
-      const contacts = await fetchContacts();
+
+      var tempresult = db.createContact("John Test", "", "", "", "", "", "", "", "", "my friend John!", "", "");
+      var result = await db.getAllContacts();
+      //const contacts = await db.getAllContacts();
+      const contacts = result.rows;
+      //const contacts = allcontsarray.map(mapContact);
 
       this.setState({
         contacts,
@@ -41,18 +43,19 @@ export default class Contacts extends React.Component {
         loading: false,
         error: true,
       });
+      console.log(e);
     }
   }
 
   renderContact = ({ item }) => {
     const { navigation: { navigate }} = this.props;
-    const { name, avatar, phone } = item;
+    //const { name, avatar, phone } = item;
 
     return(
         <ContactListItem
-        name = {name}
-        avatar = {avatar}
-        phone = {phone}
+        name = {item.name}
+        avatar = {item.imagePath}
+        phone = {item.description}
         onPress ={() => navigate('Profile')}
         />
     );
@@ -61,18 +64,18 @@ export default class Contacts extends React.Component {
   render() {
     const { loading, contacts, error } = this.state;
 
-    const contactsSorted = contacts.sort((a, b) =>
-      a.name.localeCompare(b.name));
+    //const contactsSorted = contacts.sort((a, b) =>
+     // a.name.localeCompare(b.name));
 
     return (
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
-        {error && <Text>Error...</Text>}
+        {error && <Text>Error!</Text>}
         {!loading &&
           !error && (
             <FlatList
-              data={contactsSorted}
-              keyExtractor={keyExtractor}
+              data={contacts}
+              keyExtractor={item => item.contactID}
               renderItem={this.renderContact}
             />
           )}

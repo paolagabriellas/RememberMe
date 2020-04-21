@@ -20,7 +20,7 @@ const mapContact = contact => {
 };
 
 export const fetchContacts = async () => {
-  const response = await fetch('https://randomuser.me/api/?results=100&seed=fullstackio');
+  const response = await fetch('https://randomuser.me/api/?results=1&seed=fullstackio');
   const contactData = await response.json();
   return contactData.results.map(mapContact);
 };
