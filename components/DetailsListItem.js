@@ -19,7 +19,7 @@ export default function DetailListItem({ icon, title, subtitle }) {
           )}
           <View style={styles.contentContainer}>
             <Text style={[styles.title]}>{title}</Text>
-            {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+            {<Text style={styles.subtitle}>{subtitle}</Text>}
           </View>
         </View>
       </View>

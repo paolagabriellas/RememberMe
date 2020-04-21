@@ -28,6 +28,7 @@ export default function ContactThumbnail({
         <Image source={{ uri: avatar }} style={styles.avatar} />
       </ImageComponent>
       {name !== "" && <Text style={[styles.name, colorStyle]}>{name}</Text>}
+      {phone !== "" && <Text style={[styles.phone, colorStyle]}>{phone}</Text>}
     </View>
   );
 }

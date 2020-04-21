@@ -7,13 +7,9 @@ import {
   ActivityIndicator
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import db from "../database/db";
 import TagListItem from "../components/TagListItem";
-
-import { fetchContacts } from "../utils/api";
 import colors from "../utils/colors";
-
-const keyExtractor = ({ phone }) => phone;
 
 export default class Contacts extends React.Component {
   static navigationOptions = navData => ({
@@ -35,17 +31,21 @@ export default class Contacts extends React.Component {
   });
 
   state = {
-    contacts: [],
+    tags: [],
     loading: true,
     error: false
   };
 
   async componentDidMount() {
     try {
-      const contacts = await fetchContacts();
+      var result = await db.getAllTags();
+      db.deleteTag(result.rows[0].tagID);
+      result = await db.getAllTags();
+      const tags = result.rows;
+
 
       this.setState({
-        contacts,
+        tags,
         loading: false,
         error: false
       });
@@ -61,11 +61,11 @@ export default class Contacts extends React.Component {
     const {
       navigation: { navigate }
     } = this.props;
-    const { id, name, avatar, phone } = item;
 
     return (
       <TagListItem
-        location={name}
+        location={item.name}
+        color={item.color}
         onPress={() =>
           this.props.navigation.navigate("Tag")
         }
@@ -74,20 +74,20 @@ export default class Contacts extends React.Component {
   };
 
   render() {
-    const { loading, contacts, error } = this.state;
+    const { loading, tags, error } = this.state;
 
-    const contactsSorted = contacts.sort((a, b) =>
+    const tagsSorted = tags.sort((a, b) =>
       a.name.localeCompare(b.name)
     );
 
     return (
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
-        {error && <Text>Error...</Text>}
+        {error && <Text>Error!</Text>}
         {!loading && !error && (
           <FlatList
-            data={contactsSorted}
-            keyExtractor={keyExtractor}
+            data={tagsSorted}
+            keyExtractor={item => item.tagID}
             renderItem={this.renderContact}
           />
         )}

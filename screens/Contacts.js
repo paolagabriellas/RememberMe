@@ -9,6 +9,8 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import db from "../database/db";
 import colors from "../utils/colors";
+import ContactListItem from "../components/ContactListItem";
+
 
 export default class Contacts extends React.Component {
   static navigationOptions = navData => ({
@@ -29,18 +31,11 @@ export default class Contacts extends React.Component {
   };
 
   async componentDidMount() {
-    //TODO: REMOVE THIS - TESTING PURPOSES fOR DB
-    //console.log("Before database tests");
-    //DBTest.doAllTests();
 
 
     try {
-
-      var tempresult = db.createContact("John Test", "", "", "", "", "", "", "", "", "my friend John!", "", "");
       var result = await db.getAllContacts();
-      //const contacts = await db.getAllContacts();
       const contacts = result.rows;
-      //const contacts = allcontsarray.map(mapContact);
 
       this.setState({
         contacts,
@@ -58,7 +53,6 @@ export default class Contacts extends React.Component {
 
   renderContact = ({ item }) => {
     const { navigation: { navigate }} = this.props;
-    //const { name, avatar, phone } = item;
 
     return(
         <ContactListItem
@@ -88,7 +82,7 @@ export default class Contacts extends React.Component {
         {!loading &&
           !error && (
             <FlatList
-              data={contacts}
+              data={contactsSorted}
               keyExtractor={item => item.contactID}
               renderItem={this.renderContact}
             />

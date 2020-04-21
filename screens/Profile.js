@@ -43,23 +43,22 @@ export default class Profile extends Component {
     console.log(this.props);
     const { contact } = params;
     // const { contact } = this.props.navigation.state.params;
-    const { avatar, name, email, phone, cell } = contact;
 
     return (
       <ScrollView style={styles.container}>
         <View style={styles.avatarSection}>
-          <ContactThumbnail avatar={avatar} name={name} phone={phone} />
+          <ContactThumbnail avatar={contact.imagePath} name={contact.name} phone={contact.description} />
         </View>
         <View style={styles.detailsSection}>
-          <DetailsListItem icon="portrait" title="Appearance" subtitle="Appearance Description" />
-          <DetailsListItem icon="mood" title="Demeanor" subtitle="Demeanor Description" />
-          <DetailsListItem icon="favorite" title="Interests" subtitle="Interest 1, Interest 2" />
-          <DetailsListItem icon="map" title="First Met At (Location)" subtitle="Location" />
-          <DetailsListItem icon="event" title="First Met (Date)" subtitle="MM//DD/YY" />
-          <DetailsListItem icon="cake" title="Birthday" subtitle="MM//DD/YY" />
-          <DetailsListItem icon="work" title="Job" subtitle="Job Text" />
-          <DetailsListItem icon="school" title="Major" subtitle="Major Text" />
-          <DetailsListItem icon="description" title="Other" subtitle="Here goes extra information" />
+          <DetailsListItem icon="portrait" title="Appearance" subtitle={(contact) => contact.appearance} />
+          <DetailsListItem icon="mood" title="Demeanor" subtitle={contact.demeanor} />
+          <DetailsListItem icon="favorite" title="Interests" subtitle={contact.interests} />
+          <DetailsListItem icon="map" title="First Met At (Location)" subtitle={contact.firstMeet} />
+          <DetailsListItem icon="event" title="First Met (Date)" subtitle={contact.dateOfMeet} />
+          <DetailsListItem icon="cake" title="Birthday" subtitle={contact.birthday} />
+          <DetailsListItem icon="work" title="Job" subtitle={contact.job} />
+          <DetailsListItem icon="school" title="Major" subtitle={contact.major} />
+          <DetailsListItem icon="description" title="Other" subtitle={contact.other} />
         </View>
       </ScrollView>
     );
