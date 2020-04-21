@@ -7,19 +7,31 @@ import {
   ActivityIndicator
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import db from "../database/db";
+
+import ContactListItem from "../components/ContactListItem";
+
+import { fetchContacts } from "../utils/api";
 import colors from "../utils/colors";
 
-export default class Contacts extends React.Component {
+const keyExtractor = ({ phone }) => phone;
+
+export default class Tag extends React.Component {
   static navigationOptions = navData => ({
-    title: "Contacts",
+    title: "Clicked Tag",
     headerRight: (
       <MaterialIcons
         name="home"
         size={24}
         style={{ color: colors.black }}
       />
-    )
+    ),
+    headerLeft: (
+        <MaterialIcons
+          name="add"
+          size={24}
+          style={{ color: colors.black }}
+        />
+      )
   });
 
   state = {
@@ -29,18 +41,8 @@ export default class Contacts extends React.Component {
   };
 
   async componentDidMount() {
-    //TODO: REMOVE THIS - TESTING PURPOSES fOR DB
-    //console.log("Before database tests");
-    //DBTest.doAllTests();
-
-
     try {
-
-      var tempresult = db.createContact("John Test", "", "", "", "", "", "", "", "", "my friend John!", "", "");
-      var result = await db.getAllContacts();
-      //const contacts = await db.getAllContacts();
-      const contacts = result.rows;
-      //const contacts = allcontsarray.map(mapContact);
+      const contacts = await fetchContacts();
 
       this.setState({
         contacts,
@@ -52,25 +54,26 @@ export default class Contacts extends React.Component {
         loading: false,
         error: true
       });
-      console.log(e);
     }
   }
 
   renderContact = ({ item }) => {
-    const { navigation: { navigate }} = this.props;
-    //const { name, avatar, phone } = item;
+    const {
+      navigation: { navigate }
+    } = this.props;
+    const { id, name, avatar, phone } = item;
 
-    return(
-        <ContactListItem
-        name = {item.name}
-        avatar = {item.imagePath}
-        phone = {item.description}
+    return (
+      <ContactListItem
+        name={name}
+        avatar={avatar}
+        phone={phone}
         onPress={() =>
           this.props.navigation.navigate("Profile", {
             contact: item
           })
         }
-        />
+      />
     );
   };
 
@@ -84,16 +87,14 @@ export default class Contacts extends React.Component {
     return (
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
-        {error && <Text>Error!</Text>}
-        {!loading &&
-          !error && (
-            <FlatList
-              data={contacts}
-              keyExtractor={item => item.contactID}
-              renderItem={this.renderContact}
-            />
-          )}
-
+        {error && <Text>Error...</Text>}
+        {!loading && !error && (
+          <FlatList
+            data={contactsSorted}
+            keyExtractor={keyExtractor}
+            renderItem={this.renderContact}
+          />
+        )}
       </View>
     );
   }
