@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
+import db from "../database/db";
 
 class FlatListDemo extends Component {
   constructor(props) {
@@ -15,28 +16,18 @@ class FlatListDemo extends Component {
     this.arrayholder = [];
   }
 
-  componentDidMount() {
-    this.makeRemoteRequest();
-  }
-
-  makeRemoteRequest = () => {
-    const url = `https://randomuser.me/api/?&results=20`;
+  async componentDidMount() {
     this.setState({ loading: true });
+    var results = await db.getAllContacts();
+    const data = results.rows;
 
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: res.results,
-          error: res.error || null,
+    this.setState({
+          data,
+          error: false,
           loading: false,
         });
-        this.arrayholder = res.results;
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
-  };
+    this.arrayholder = data;
+  }
 
   renderSeparator = () => {
     return (
@@ -57,7 +48,7 @@ class FlatListDemo extends Component {
     });
 
     const newData = this.arrayholder.filter(item => {
-      const itemData = `${item.name.title.toUpperCase()} ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
+      const itemData = `${item.name.toUpperCase()}`;
       const textData = text.toUpperCase();
 
       return itemData.indexOf(textData) > -1;
@@ -70,7 +61,7 @@ class FlatListDemo extends Component {
   renderHeader = () => {
     return (
       <SearchBar
-        placeholder="Type Here..."
+        placeholder="Search..."
         lightTheme
         round
         onChangeText={text => this.searchFilterFunction(text)}
@@ -94,12 +85,14 @@ class FlatListDemo extends Component {
           data={this.state.data}
           renderItem={({ item }) => (
             <ListItem
-              leftAvatar={{ source: { uri: item.picture.thumbnail } }}
-              title={`${item.name.first} ${item.name.last}`}
-              subtitle={item.email}
+              leftAvatar={{ source: { uri: item.imagePath } }}
+              title={`${item.name}`}
+              subtitle={item.description}
+              onPress={() =>
+                  this.props.navigation.navigate("Profile", { contact: item})}
             />
           )}
-          keyExtractor={item => item.email}
+          keyExtractor={item => item.contactID}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
         />

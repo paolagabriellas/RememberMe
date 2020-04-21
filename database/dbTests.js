@@ -6,10 +6,10 @@ export class DBTest {
         {
             var tagName = "Test" + parseInt(Math.random()*10000);
             var result = null;
-            
+
             //TAG Tests
             db.createTag(tagName, "Blue");
-            //ALWAYS USE AWAIT if you want to access the data returned by the call!!!! These are async functions 
+            //ALWAYS USE AWAIT if you want to access the data returned by the call!!!! These are async functions
             result = await db.findAllTagsWithNameLike("Test");
             result = await db.findAllTagsWithNameLike(tagName);
             result = result.rows[0].tagID; //This is how you access the attributes inside the ResultSet array
@@ -32,7 +32,7 @@ export class DBTest {
             //console.log(result);
             result = await db.updateContact(id,"AAAAHH", null, "nerdy");
             result = await db.getAllContacts(); //
-            //console.log(result);
+            console.log(result);
             await db.deleteContact(id);
 
             console.log("\n\n\nContactsTagged Tests");
@@ -47,7 +47,7 @@ export class DBTest {
             result = await db.getAllContactsWithTag(tag_id)
             //console.log(result);
             result = await db.getAllFromContactsTagged()
-            console.log(result);
+            //console.log(result);
 
             //These work, only uncomment out one delete at a time.
             //await db.deleteTagFromContact(tag_id, contact_id)
@@ -56,7 +56,7 @@ export class DBTest {
             //console.log("After delete")
             //result = await db.getAllFromContactsTagged()
             //console.log(result);
-           
+
             await db.deleteTag(tag_id);
             await db.deleteContact(contact_id);
         }
@@ -65,6 +65,6 @@ export class DBTest {
             console.log(e);
             console.log("Error in db tests")
         }
-        
+
     }
 }

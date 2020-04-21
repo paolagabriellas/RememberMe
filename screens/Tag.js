@@ -10,39 +10,47 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import ContactListItem from "../components/ContactListItem";
 
-import { fetchContacts } from "../utils/api";
+import db from "../database/db";
 import colors from "../utils/colors";
 
-const keyExtractor = ({ phone }) => phone;
-
 export default class Tag extends React.Component {
-  static navigationOptions = navData => ({
-    title: "Clicked Tag",
-    headerRight: (
+  static navigationOptions = ({navigation}) => {
+  //console.log(navigation);
+    return {
+    title: navigation.state.params.tag.name,
+    headerLeft: (
       <MaterialIcons
         name="home"
         size={24}
         style={{ color: colors.black }}
+        onPress={() =>
+          navigation.navigate("Tags")
+          }
       />
-    ),
-    headerLeft: (
-        <MaterialIcons
-          name="add"
-          size={24}
-          style={{ color: colors.black }}
-        />
-      )
-  });
+    )
+    };
+  };
 
   state = {
     contacts: [],
     loading: true,
-    error: false
+    error: false,
+    arecontacts : true
   };
 
   async componentDidMount() {
+
+    //console.log(this.props.navigation.state.params.tag);
+    var tag = this.props.navigation.state.params.tag;
+    //console.log(tag);
     try {
-      const contacts = await fetchContacts();
+      var allcontacts = await db.getAllContactsWithTag(tag.tagID);
+      const contacts = allcontacts.rows;
+      console.log(contacts);
+      if(!contacts.length)
+      {
+        this.setState({arecontacts: false});
+      }
 
       this.setState({
         contacts,
@@ -54,6 +62,7 @@ export default class Tag extends React.Component {
         loading: false,
         error: true
       });
+      console.log(e);
     }
   }
 
@@ -61,13 +70,13 @@ export default class Tag extends React.Component {
     const {
       navigation: { navigate }
     } = this.props;
-    const { id, name, avatar, phone } = item;
+    //const { id, name, avatar, phone } = item;
 
     return (
       <ContactListItem
-        name={name}
-        avatar={avatar}
-        phone={phone}
+        name={item.name}
+        avatar={item.imagePath}
+        phone={item.description}
         onPress={() =>
           this.props.navigation.navigate("Profile", {
             contact: item
@@ -78,20 +87,21 @@ export default class Tag extends React.Component {
   };
 
   render() {
-    const { loading, contacts, error } = this.state;
+    const { loading, contacts, error, arecontacts } = this.state;
 
-    const contactsSorted = contacts.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    //const contactsSorted = contacts.sort((a, b) =>
+    //  a.name.localeCompare(b.name)
+   // );
 
     return (
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
         {error && <Text>Error...</Text>}
-        {!loading && !error && (
-          <FlatList
-            data={contactsSorted}
-            keyExtractor={keyExtractor}
+        {!arecontacts && <Text>No contacts have that tag. Please try again.</Text>}
+        {!loading && !error && arecontacts && (
+           <FlatList
+            data={contacts}
+            keyExtractor={item=>item.itemID}
             renderItem={this.renderContact}
           />
         )}

@@ -13,7 +13,7 @@ class Connection {
                 if (err) {
                     return reject(err);
                 }
-                
+
                 if (res[0].error) {
                     return reject(res[0].error);
                 }
@@ -68,20 +68,20 @@ export class Database {
         return await this._connection.execute(sqlQuery, args);
     }
 
-    //Creates a tag if it doesn't exist or replaces it if it already exists 
+    //Creates a tag if it doesn't exist or replaces it if it already exists
     async createTag(name, color="blue") {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("INSERT INTO tags (name, color) \
             VALUES(? , ?);", [name,color]);
-            //console.log(result); 
+            //console.log(result);
         }
         catch(e)
         {
             console.log(e);
             console.log("Error in createTag");
-        }  
+        }
         return result;
     }
 
@@ -140,7 +140,7 @@ export class Database {
     //Returns null if unsuccessful or a ResultSet of tags if successful.
     async getAllTags() {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("SELECT * FROM tags;");
         }
@@ -154,7 +154,7 @@ export class Database {
 
     async getTag(id) {
         var result = null;
-        try 
+        try
         {
             //console.log(typeof(id));
             result = await this.execute("SELECT * FROM tags WHERE tagID = ?;", [id]);
@@ -167,12 +167,12 @@ export class Database {
         return result;
     }
 
-    
+
     //This one is vulnerable to SQL injections, because I couldn't figure out how to use the like operator with the ? syntax
     //Returns null on an error otherwise a ResultSet.
     async findAllTagsWithNameLike(name) {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("SELECT * FROM tags WHERE name LIKE \"%" +  name + "%\";");
         }
@@ -185,7 +185,7 @@ export class Database {
 
     //Deletes tag with id; void
     async deleteTag(id) {
-        try 
+        try
         {
             await this.deleteAllOfOneTag(id);
             await this.execute("DELETE FROM tags WHERE tagID = ?", Array.of(id));
@@ -194,18 +194,18 @@ export class Database {
         {
             console.log(e)
             console.log("Error in deleteTag");
-        }  
+        }
     }
 
     //Creates a contact. Requires a name, all other parameters are optional
     async createContact(name, appearance="", demeanor="", interests="", firstMeet="", dateOfMeet="",birthday="",major="",job="",description="",other="",imagePath="")
     {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("INSERT INTO contacts (name, appearance,demeanor,interests,firstMeet,dateOfMeet,birthday,major,job,description,other,imagePath)\
                                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [name,appearance,demeanor,interests,firstMeet,dateOfMeet,birthday,major,job,description,other,imagePath]);
-        
+
             //console.log(result);
         }
         catch(e)
@@ -219,7 +219,7 @@ export class Database {
     //Gets all the data for a contact with id
     async getContact(id) {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("SELECT * FROM contacts WHERE contactID = ?;", Array.of(id));
         }
@@ -234,7 +234,7 @@ export class Database {
     //Gets all of the contacts listed by name alphabetically; returns an array in the ResultSet
     async getAllContacts(){
         var result = null
-        try 
+        try
         {
             result = await this.execute("SELECT * FROM contacts ORDER BY name ASC;");
         }
@@ -250,7 +250,7 @@ export class Database {
     //Returns null on an error otherwise a ResultSet.
     async findAllContactsWithNameLike(name) {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("SELECT * FROM contacts WHERE name LIKE \"%" +  name + "%\";");
         }
@@ -273,7 +273,7 @@ export class Database {
             catch (e)
             {
                 console.log(e);
-                console.log("Error on trying to update a tag - updateTag3");
+                console.log("Error on trying to update a contact - updateContact");
             }
     }
 
@@ -294,9 +294,9 @@ export class Database {
     //Gets all tags for a contact
     async getAllTagsForContact(contactID) {
         var result = null;
-        try 
+        try
         {
-            result = await this.execute("SELECT * FROM ContactsTagged WHERE contactID = ?", [contactID]);
+            result = await this.execute("SELECT * FROM tags WHERE tagID IN (SELECT tagID FROM ContactsTagged WHERE contactID = ?)", [contactID]);
             //console.log(result);
         }
         catch(e)
@@ -310,9 +310,9 @@ export class Database {
     //Gets all contacts that have a particular tag
     async getAllContactsWithTag(tagID) {
         var result = null;
-        try 
+        try
         {
-            result = await this.execute("SELECT * FROM ContactsTagged WHERE tagID = ?", [tagID]);
+            result = await this.execute("SELECT * FROM contacts WHERE contactID IN (SELECT ContactID FROM ContactsTagged WHERE tagID = ?)", [tagID]);
             //console.log(result);
         }
         catch(e)
@@ -326,7 +326,7 @@ export class Database {
     //Gets all the different relationships from ContactsTagged
     async getAllFromContactsTagged() {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("SELECT * FROM ContactsTagged");
             //console.log(result);
@@ -342,11 +342,11 @@ export class Database {
     //Adds a tag to the the contact
     async addTagToContact(tagID, contactID) {
         var result = null;
-        try 
+        try
         {
             result = await this.execute("INSERT INTO ContactsTagged (contactID, tagID)\
                                 VALUES(?, ?);",[contactID,tagID] );
-        
+
             //console.log(result);
         }
         catch(e)

@@ -59,7 +59,7 @@ const TagsScreen = createStackNavigator(
             tabBarIcon: getTabBarIcon("label")
         }
     }
-    
+
   );
 
 const FavoriteScreens = createStackNavigator(
@@ -84,6 +84,9 @@ const SearchScreens = createStackNavigator(
   {
     Search: {
       screen: Search
+    },
+    Profile: {
+      screen: Profile
     }
   },
   {
@@ -123,8 +126,9 @@ const DrawerToggle = createBottomTabNavigator(
       },
       showLabel: false,
     //   showIcon: true,
-      activeTintColor: colors.blue,
-      inactiveTintColor: colors.greyDark,
+    activeTintColor: '#e91e63',
+    inactiveTintColor: 'white',
+    inactiveBackgroundColor: '#7a7a7a',
       renderIndicator: () => null
     }
   }

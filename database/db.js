@@ -21,9 +21,9 @@ const db = new Database("main", {
     }
   },
   migrateFn: async connection => {
-    
-    //Inside migration function you can use `connection.beginTransaction`, `connection.commitTransaction` and 
-    //`connection.rollbackTransaction` methods to control transactions, as needed. In this example I simply 
+
+    //Inside migration function you can use `connection.beginTransaction`, `connection.commitTransaction` and
+    //`connection.rollbackTransaction` methods to control transactions, as needed. In this example I simply
     //run all migrations inside single transaction. Your needs might be different
     //Outside of migration use `transaction` method of `Database` class for transactions
     await connection.beginTransaction();
@@ -36,7 +36,7 @@ const db = new Database("main", {
       ).rows.map(({ version }) => version);
       const currentVersion = Math.max(0, ...versions);
       for (let i = currentVersion + 1; i < migrations.length; i++) {
-        
+
         await migrations[i](connection);
         await connection.execute(`insert into ${migrationsTable} values (?, ?)`, [
           i,
@@ -50,8 +50,8 @@ const db = new Database("main", {
       console.log("An error has occurred while initializing the database. Rolling back transaction.");
       await connection.rollbackTransaction();
       console.log(e);
-    }    
-    
+    }
+
   }
 });
 

@@ -11,14 +11,24 @@ import PropTypes from "prop-types";
 
 import colors from "../utils/colors";
 
-export default function TagListItem({ location, onPress }) {
+export default function TagListItem({ location, color, onPress }) {
   return (
     <TouchableHighlight
       underlayColor={colors.grey}
       style={styles.touchable}
       onPress={onPress}
     >
-      <View style={styles.view}>
+      <View style={{
+    backgroundColor: color,
+    flexDirection: 'row',
+    borderRadius: 23,
+    borderWidth: 2,
+    height: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 16,
+    paddingRight: 16
+  }}>
           <Text style={styles.text}>{location}</Text>
       </View>
     </TouchableHighlight>
