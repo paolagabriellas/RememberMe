@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import ContactListItem from "../components/ContactListItem";
+import TagListItem from "../components/TagListItem";
 
 import { fetchContacts } from "../utils/api";
 import colors from "../utils/colors";
@@ -17,7 +17,14 @@ const keyExtractor = ({ phone }) => phone;
 
 export default class Contacts extends React.Component {
   static navigationOptions = navData => ({
-    title: "Contacts",
+    title: "Tags",
+    headerLeft: (
+      <MaterialIcons
+        name="add"
+        size={24}
+        style={{ color: colors.black }}
+      />
+    ),
     headerRight: (
       <MaterialIcons
         name="home"
@@ -57,14 +64,10 @@ export default class Contacts extends React.Component {
     const { id, name, avatar, phone } = item;
 
     return (
-      <ContactListItem
-        name={name}
-        avatar={avatar}
-        phone={phone}
+      <TagListItem
+        location={name}
         onPress={() =>
-          this.props.navigation.navigate("Profile", {
-            contact: item
-          })
+          this.props.navigation.navigate("Tag")
         }
       />
     );

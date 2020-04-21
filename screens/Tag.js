@@ -15,16 +15,23 @@ import colors from "../utils/colors";
 
 const keyExtractor = ({ phone }) => phone;
 
-export default class Contacts extends React.Component {
+export default class Tag extends React.Component {
   static navigationOptions = navData => ({
-    title: "Contacts",
+    title: "Clicked Tag",
     headerRight: (
       <MaterialIcons
         name="home"
         size={24}
         style={{ color: colors.black }}
       />
-    )
+    ),
+    headerLeft: (
+        <MaterialIcons
+          name="add"
+          size={24}
+          style={{ color: colors.black }}
+        />
+      )
   });
 
   state = {

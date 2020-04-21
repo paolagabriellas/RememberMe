@@ -1,11 +1,9 @@
-import uuidv4 from 'uuid/v4';
+import uuidv4 from "uuid/v4";
 
-import capitalize from '../utils/capitalize';
+import capitalize from "../utils/capitalize";
 
 const mapContact = contact => {
-  const {
-    name, picture, phone, cell, email,
-  } = contact;
+  const { name, picture, phone, cell, email } = contact;
 
   return {
     id: uuidv4(),
@@ -14,27 +12,49 @@ const mapContact = contact => {
     phone,
     cell,
     email,
-    favorite: Math.random() >= 0.5, // randomly generate favorite contacts
+    favorite: Math.random() >= 0.5 // randomly generate favorite contacts
   };
 };
 
 export const fetchContacts = async () => {
-  const response = await fetch('https://randomuser.me/api/?results=100&seed=fullstackio');
+  const response = await fetch(
+    "https://randomuser.me/api/?results=100&seed=fullstackio"
+  );
   const contactData = await response.json();
+  // console.log(contactData);
 
   return contactData.results.map(mapContact);
 };
 
 export const fetchUserContact = async () => {
-  const response = await fetch('https://randomuser.me/api/?seed=fullstackio');
+  const response = await fetch("https://randomuser.me/api/?seed=fullstackio");
   const userData = await response.json();
 
   return mapContact(userData.results[0]);
 };
 
 export const fetchRandomContact = async () => {
-  const response = await fetch('https://randomuser.me/api/');
+  const response = await fetch("https://randomuser.me/api/");
   const userData = await response.json();
 
   return mapContact(userData.results[0]);
+};
+
+export const fetchTags = async () => {
+  const response = await fetch(
+    "https://randomuser.me/api/?results=10&seed=fullstackio"
+  );
+  const tagData = await response.json();
+  // console.log(contactData);
+
+  return tagData.results.map(mapTag);
+};
+
+const mapTag = tag => {
+  const { location } = tag;
+
+  return {
+    id: uuidv4(),
+    location: name.first
+  };
 };
