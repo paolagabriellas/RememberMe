@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import ContactThumbnail from "../components/ContactThumbnail";
 import DetailsListItem from "../components/DetailsListItem";
 
-import { fetchRandomContact } from "../utils/api";
+//import { fetchRandomContact } from "../utils/api";
 import colors from "../utils/colors";
 
 export default class Profile extends Component {
@@ -18,10 +18,10 @@ export default class Profile extends Component {
   // }
 
   static navigationOptions = ({ navigation }) => {
-    console.log(navigation);
+    //console.log(navigation);
 
     return {
-      title: navigation.state.params.contact.name.split(" ")[0],
+      title: navigation.state.params.contact.name,
       headerTintColor: "white",
       headerStyle: {
         backgroundColor: colors.blue
@@ -30,7 +30,8 @@ export default class Profile extends Component {
   };
 
   async componentDidMount() {
-    const contact = await fetchRandomContact();
+    const contact = this.params;
+    console.log(contact);
     this.setState({ contact });
   }
 
@@ -40,7 +41,7 @@ export default class Profile extends Component {
         state: { params }
       }
     } = this.props;
-    console.log(this.props);
+    //console.log(this.props);
     const { contact } = params;
     // const { contact } = this.props.navigation.state.params;
 
@@ -50,7 +51,7 @@ export default class Profile extends Component {
           <ContactThumbnail avatar={contact.imagePath} name={contact.name} phone={contact.description} />
         </View>
         <View style={styles.detailsSection}>
-          <DetailsListItem icon="portrait" title="Appearance" subtitle={(contact) => contact.appearance} />
+          <DetailsListItem icon="portrait" title="Appearance" subtitle={contact.appearance} />
           <DetailsListItem icon="mood" title="Demeanor" subtitle={contact.demeanor} />
           <DetailsListItem icon="favorite" title="Interests" subtitle={contact.interests} />
           <DetailsListItem icon="map" title="First Met At (Location)" subtitle={contact.firstMeet} />

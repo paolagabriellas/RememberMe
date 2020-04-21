@@ -296,7 +296,7 @@ export class Database {
         var result = null;
         try
         {
-            result = await this.execute("SELECT * FROM ContactsTagged WHERE contactID = ?", [contactID]);
+            result = await this.execute("SELECT * FROM tags WHERE tagID IN (SELECT tagID FROM ContactsTagged WHERE contactID = ?)", [contactID]);
             //console.log(result);
         }
         catch(e)
@@ -312,7 +312,7 @@ export class Database {
         var result = null;
         try
         {
-            result = await this.execute("SELECT * FROM ContactsTagged WHERE tagID = ?", [tagID]);
+            result = await this.execute("SELECT * FROM contacts WHERE contactID IN (SELECT ContactID FROM ContactsTagged WHERE tagID = ?)", [tagID]);
             //console.log(result);
         }
         catch(e)
