@@ -8,21 +8,14 @@ import colors from "../utils/colors";
 
 export default class Search extends React.Component{
     static navigationOptions = navData => ({
-        title: "Search",
-        headerRight: (
-            <MaterialIcons
-            name="home"
-            size={24}
-            style={{ color: colors.black }}
-            />
-        )
+        title: "Search"
         });
 
 
     render() {
         return(
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-                <FlatListDemo />
+                <FlatListDemo navigation = {this.props.navigation}/>
             </SafeAreaView>
         )
     }

@@ -88,6 +88,8 @@ class FlatListDemo extends Component {
               leftAvatar={{ source: { uri: item.imagePath } }}
               title={`${item.name}`}
               subtitle={item.description}
+              onPress={() =>
+                  this.props.navigation.navigate("Profile", { contact: item})}
             />
           )}
           keyExtractor={item => item.contactID}

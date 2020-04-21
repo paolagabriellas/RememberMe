@@ -20,13 +20,6 @@ export default class Contacts extends React.Component {
         size={24}
         style={{ color: colors.black }}
       />
-    ),
-    headerRight: (
-      <MaterialIcons
-        name="home"
-        size={24}
-        style={{ color: colors.black }}
-      />
     )
   });
 
@@ -39,8 +32,6 @@ export default class Contacts extends React.Component {
   async componentDidMount() {
     try {
       var result = await db.getAllTags();
-      db.deleteTag(result.rows[0].tagID);
-      result = await db.getAllTags();
       const tags = result.rows;
 
 
@@ -67,7 +58,7 @@ export default class Contacts extends React.Component {
         location={item.name}
         color={item.color}
         onPress={() =>
-          this.props.navigation.navigate("Tag")
+          this.props.navigation.navigate("ClickedTag", { tag:item })
         }
       />
     );

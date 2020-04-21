@@ -59,7 +59,7 @@ const TagsScreen = createStackNavigator(
             tabBarIcon: getTabBarIcon("label")
         }
     }
-    
+
   );
 
 const FavoriteScreens = createStackNavigator(
@@ -84,6 +84,9 @@ const SearchScreens = createStackNavigator(
   {
     Search: {
       screen: Search
+    },
+    Profile: {
+      screen: Profile
     }
   },
   {

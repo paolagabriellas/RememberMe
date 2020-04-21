@@ -15,9 +15,9 @@ import ContactListItem from "../components/ContactListItem";
 export default class Contacts extends React.Component {
   static navigationOptions = navData => ({
     title: "Contacts",
-    headerRight: (
+    headerLeft: (
       <MaterialIcons
-        name="home"
+        name="add"
         size={24}
         style={{ color: colors.black }}
       />
@@ -34,7 +34,9 @@ export default class Contacts extends React.Component {
 
 
     try {
+
       var result = await db.getAllContacts();
+      //console.log(result);
       const contacts = result.rows;
 
       this.setState({
