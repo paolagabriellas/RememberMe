@@ -2,6 +2,7 @@ import uuidv4 from "uuid/v4";
 
 import capitalize from "../utils/capitalize";
 
+
 const mapContact = contact => {
   const { name, picture, phone, cell, email } = contact;
 
