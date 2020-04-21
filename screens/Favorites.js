@@ -8,21 +8,19 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import ContactListItem from "../components/ContactListItem";
-
+import { fetchContacts } from "../utils/api";
 import colors from "../utils/colors";
-import { fetchContacts } from '../utils/api';
-//import {Database} from "../database/database";
-import {DBTest} from "../database/dbTests";
+
+import ContactThumbnail from "../components/ContactThumbnail";
 
 const keyExtractor = ({ phone }) => phone;
 
-export default class Contacts extends React.Component {
+export default class Favorites extends React.Component {
   static navigationOptions = navData => ({
-    title: "Contacts",
-    headerRight: (
+    title: "Favorites",
+    headerLeft: (
       <MaterialIcons
-        name="home"
+        name="menu"
         size={24}
         style={{ color: colors.black }}
       />
@@ -36,11 +34,6 @@ export default class Contacts extends React.Component {
   };
 
   async componentDidMount() {
-    //TODO: REMOVE THIS - TESTING PURPOSES fOR DB
-    console.log("Before database tests");
-    DBTest.doAllTests();
-
-
     try {
       const contacts = await fetchContacts();
 
@@ -57,42 +50,35 @@ export default class Contacts extends React.Component {
     }
   }
 
-  renderContact = ({ item }) => {
+  renderFavoriteThumbnail = ({ item }) => {
     const {
       navigation: { navigate }
     } = this.props;
-    const { id, name, avatar, phone } = item;
+    const { avatar } = item;
 
     return (
-      <ContactListItem
-        name={name}
+      <ContactThumbnail
         avatar={avatar}
-        phone={phone}
-        onPress={() =>
-          this.props.navigation.navigate("Profile", {
-            contact: item
-          })
-        }
       />
     );
   };
 
   render() {
     const { loading, contacts, error } = this.state;
-
-    const contactsSorted = contacts.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    const favorites = contacts.filter(contact => contact.favorite);
 
     return (
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
         {error && <Text>Error...</Text>}
+
         {!loading && !error && (
           <FlatList
-            data={contactsSorted}
+            data={favorites}
             keyExtractor={keyExtractor}
-            renderItem={this.renderContact}
+            numColumns={3}
+            contentContainerStyle={styles.list}
+            renderItem={this.renderFavoriteThumbnail}
           />
         )}
       </View>
@@ -105,5 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     flex: 1
+  },
+  list: {
+    alignItems: "center"
   }
 });

@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
+import React from "react";
+import { StyleSheet, VIew, Text, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import PropTypes from "prop-types";
 
-import colors from '../utils/colors';
+import colors from "../utils/colors";
 
 export default function DetailListItem({ icon, title, subtitle }) {
   return (
@@ -11,18 +11,14 @@ export default function DetailListItem({ icon, title, subtitle }) {
       <View style={styles.wrapper}>
         <View style={styles.container}>
           {icon && (
-            <Icon
+            <MaterialIcons
               name={icon}
               size={24}
-              style={{
-                color: colors.black,
-                marginRight: 20,
-              }}
+              style={{ color: colors.black, marginRight: 20 }}
             />
           )}
           <View style={styles.contentContainer}>
             <Text style={[styles.title]}>{title}</Text>
-
             {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
           </View>
         </View>
@@ -34,43 +30,43 @@ export default function DetailListItem({ icon, title, subtitle }) {
 DetailListItem.propTypes = {
   icon: PropTypes.string,
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string,
+  subtitle: PropTypes.string
 };
 
 DetailListItem.defaultProps = {
   icon: null,
-  subtitle: null,
+  subtitle: null
 };
 
 const styles = StyleSheet.create({
   borderContainer: {
-    paddingLeft: 24,
+    paddingLeft: 24
   },
   wrapper: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingTop: 16,
     paddingBottom: 16,
     paddingRight: 24,
     borderBottomColor: colors.grey,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
   container: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center"
   },
   contentContainer: {
-    justifyContent: 'center',
-    flex: 1,
+    justifyContent: "center",
+    flex: 1
   },
   title: {
     color: colors.black,
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: "bold",
+    fontSize: 16
   },
   subtitle: {
     color: colors.blue,
     fontSize: 15,
-    marginTop: 4,
-  },
+    marginTop: 4
+  }
 });

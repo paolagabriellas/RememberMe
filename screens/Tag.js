@@ -10,23 +10,28 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import ContactListItem from "../components/ContactListItem";
 
+import { fetchContacts } from "../utils/api";
 import colors from "../utils/colors";
-import { fetchContacts } from '../utils/api';
-//import {Database} from "../database/database";
-import {DBTest} from "../database/dbTests";
 
 const keyExtractor = ({ phone }) => phone;
 
-export default class Contacts extends React.Component {
+export default class Tag extends React.Component {
   static navigationOptions = navData => ({
-    title: "Contacts",
+    title: "Clicked Tag",
     headerRight: (
       <MaterialIcons
         name="home"
         size={24}
         style={{ color: colors.black }}
       />
-    )
+    ),
+    headerLeft: (
+        <MaterialIcons
+          name="add"
+          size={24}
+          style={{ color: colors.black }}
+        />
+      )
   });
 
   state = {
@@ -36,11 +41,6 @@ export default class Contacts extends React.Component {
   };
 
   async componentDidMount() {
-    //TODO: REMOVE THIS - TESTING PURPOSES fOR DB
-    console.log("Before database tests");
-    DBTest.doAllTests();
-
-
     try {
       const contacts = await fetchContacts();
 
