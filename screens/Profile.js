@@ -65,18 +65,37 @@ export default class Profile extends Component {
   }
 }
 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   avatarSection: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.blue
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.gray,
+    borderColor: 'white',
+    borderRightWidth: 10,
+    borderLeftWidth: 10
   },
   detailsSection: {
     flex: 1,
-    backgroundColor: "white"
-  }
+    backgroundColor: 'white',
+  },
 });
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1
+//   },
+//   avatarSection: {
+//     flex: 1,
+//     alignItems: "center",
+//     justifyContent: "center",
+//     backgroundColor: colors.blue
+//   },
+//   detailsSection: {
+//     flex: 1,
+//     backgroundColor: "white"
+//   }
+// });

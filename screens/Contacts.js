@@ -81,7 +81,7 @@ export default class Contacts extends React.Component {
         {error && <Text>Error!</Text>}
         {!loading &&
           !error && (
-            <FlatList
+            <FlatList style = {styles.items}
               data={contactsSorted}
               keyExtractor={item => item.contactID}
               renderItem={this.renderContact}
@@ -95,8 +95,17 @@ export default class Contacts extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    justifyContent: "center",
-    flex: 1
+    backgroundColor: 'gray',
+    borderColor: 'white',
+    borderWidth: 10,
+    justifyContent: 'center',
+    alignContent: "space-between",
+    flex: 1 ,
+    borderBottomWidth: 10,
+  },
+
+  items: {
+    borderColor: 'white',
+    borderBottomWidth: 1
   }
 });

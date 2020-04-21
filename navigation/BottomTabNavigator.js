@@ -17,7 +17,15 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
   //db.execute("SELECT * FROM users");
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}
+      tabBarOptions={{
+      activeTintColor: '#e91e63',
+      inactiveTintColor: 'white',
+      inactiveBackgroundColor: '#7a7a7a',
+      borderColor: 'white',
+      borderWidth: 10
+    }}
+    >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
