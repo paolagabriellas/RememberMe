@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 45,
     borderColor: "white",
+    backgroundColor: "grey",
     borderWidth: 2
   },
   name: {

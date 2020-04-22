@@ -85,7 +85,7 @@ class FlatListDemo extends Component {
           data={this.state.data}
           renderItem={({ item }) => (
             <ListItem
-              leftAvatar={{ source: { uri: item.imagePath } }}
+              leftAvatar={{ backgroundColor:"grey"}}
               title={`${item.name}`}
               subtitle={item.description}
               onPress={() =>

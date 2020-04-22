@@ -19,7 +19,7 @@ export default function ContactListItem({ name, avatar, phone, onPress }) {
       onPress={onPress}
     >
       <View style={styles.contactInfo}>
-        <Image style={styles.avatar} source={{ uri: avatar }} />
+        <Image style={styles.avatar} />
         <View style={styles.details}>
           <Text style={[styles.title]}>{name}</Text>
           <Text style={styles.subtitle}>{phone}</Text>
@@ -38,7 +38,7 @@ ContactListItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 24
+    paddingLeft: 16,
   },
   contactInfo: {
     flex: 1,
@@ -46,10 +46,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 16,
     paddingRight: 24,
+    paddingBottom: 16,
     borderBottomColor: colors.grey,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   avatar: {
+    backgroundColor: "grey",
     borderRadius: 22,
     width: 44,
     height: 44

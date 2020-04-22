@@ -18,7 +18,7 @@ export default class Tag extends React.Component {
   //console.log(navigation);
     return {
     title: navigation.state.params.tag.name,
-    headerLeft: (
+    headerLeft:() => (
       <MaterialIcons
         name="home"
         size={24}
@@ -46,7 +46,7 @@ export default class Tag extends React.Component {
     try {
       var allcontacts = await db.getAllContactsWithTag(tag.tagID);
       const contacts = allcontacts.rows;
-      console.log(contacts);
+      //console.log(contacts);
       if(!contacts.length)
       {
         this.setState({arecontacts: false});

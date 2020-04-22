@@ -75,10 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.gray,
-    borderColor: 'white',
-    borderRightWidth: 10,
-    borderLeftWidth: 10
+    backgroundColor: colors.blue,
   },
   detailsSection: {
     flex: 1,

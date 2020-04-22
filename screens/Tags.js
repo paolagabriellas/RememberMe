@@ -14,13 +14,6 @@ import colors from "../utils/colors";
 export default class Contacts extends React.Component {
   static navigationOptions = navData => ({
     title: "Tags",
-    headerLeft: (
-      <MaterialIcons
-        name="add"
-        size={24}
-        style={{ color: colors.black }}
-      />
-    )
   });
 
   state = {
