@@ -12,11 +12,9 @@ export default class ContactEditScreen extends Component {
   };
 
   constructor(){
-    const { navigation } = this.props;
-
     super();
     this.state = {
-        name: navigation.getParam('contact').name,
+        name: '',
         description: '', 
         appearance: '',
         demeanor: '',
@@ -33,8 +31,8 @@ export default class ContactEditScreen extends Component {
 
 componentDidMount() {
   const { navigation } = this.props;
-  db.getContact(navigation.getParam('contactID')).then((data) => {
-    console.log(data);
+  db.getContact(navigation.state.params.contactID).then((data) => {
+    // console.log(data);
     const contact = data;
     this.setState({
         name: contact.name,

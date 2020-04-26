@@ -31,8 +31,7 @@ export default class Profile extends Component {
         style={{ color: colors.white }}
         onPress={() => {
           navigation.navigate('EditContact', {
-            contactID: navigation.state.params.contact.contactID,
-            contact: navigation.state.params.contact
+            contactID: navigation.state.params.contact.contactID
           });
         }}
       />
@@ -46,15 +45,15 @@ export default class Profile extends Component {
 
   async componentDidMount() {
     const contact = this.params;
-    console.log(contact);
+    // console.log(contact);
     this.setState({ contact });
   }
 
-  async componentDidUpdate() {
-    const contact = this.params;
-    console.log(contact);
-    this.setState({ contact });
-  }
+  // async componentDidUpdate() {
+  //   const contact = this.params;
+  //   // console.log(contact);
+  //   this.setState({ contact });
+  // }
 
   render() {
     const {
