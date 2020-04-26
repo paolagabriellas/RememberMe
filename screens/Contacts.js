@@ -2,7 +2,6 @@ import React from "react";
 import {
    StyleSheet,
   Alert,
-  Modal,
   Text,
   View,
   ScrollView,
@@ -10,7 +9,6 @@ import {
   TouchableHighlight,
   ActivityIndicator
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 import db from "../database/db";
 import colors from "../utils/colors";
 import ContactListItem from "../components/ContactListItem";
@@ -28,10 +26,32 @@ export default class Contacts extends React.Component {
     contacts: [],
     loading: true,
     error: false,
-    modalVisible: false
   };
 
   async componentDidMount() {
+
+
+    try {
+      var result = await db.getAllContacts();
+      //console.log(result);
+      const contacts = result.rows;
+
+
+      this.setState({
+        contacts,
+        loading: false,
+        error: false
+      });
+    } catch (e) {
+      this.setState({
+        loading: false,
+        error: true
+      });
+      console.log(e);
+    }
+  }
+
+  async componentDidUpdate() {
 
 
     try {
@@ -71,9 +91,6 @@ export default class Contacts extends React.Component {
     );
   };
 
-  setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
-  }
 
   render() {
     const { loading, contacts, error, modalVisible } = this.state;
@@ -95,158 +112,13 @@ export default class Contacts extends React.Component {
             />
           )}
 
-<Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-            }}
-          >
-            <View style={styles.centeredView}>
-              <ScrollView style={styles.modalView}>
-
-                <Input
-                  placeholder='Name'
-                  leftIcon={
-                    <Icon
-                      name='user'
-                      size={24}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Description'
-                  leftIcon={
-                    <Icon
-                      name='question-circle'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Appearance'
-                  leftIcon={
-                    <Icon
-                      name='eye'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Demeanor'
-                  leftIcon={
-                    <Icon
-                      name='smile-o'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Interests'
-                  leftIcon={
-                    <Icon
-                      name='heart-o'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='First Met At'
-                  leftIcon={
-                    <Icon
-                      name='map-marker'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='First Met'
-                  leftIcon={
-                    <Icon
-                      name='calendar'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Birthday'
-                  leftIcon={
-                    <Icon
-                      name='birthday-cake'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Job'
-                  leftIcon={
-                    <Icon
-                      name='briefcase'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Major'
-                  leftIcon={
-                    <Icon
-                      name='graduation-cap'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-                <Input
-                  placeholder='Other'
-                  leftIcon={
-                    <Icon
-                      name='reorder'
-                      size={15}
-                      color='black'
-                    />
-                  }
-                />
-
-
-                <TouchableHighlight
-                  style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                  onPress={() => {
-                    this.setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </TouchableHighlight>
-              </ScrollView>
-            </View>
-          </Modal>
-
           <TouchableHighlight
             style={styles.openButton}
             onPress={() => {
-              this.setModalVisible(true);
+              this.props.navigation.navigate('AddContact');
             }}
           >
-            <Text style={styles.textStyle}>Add</Text>
+            <Text style={styles.textStyle}>Add Contact</Text>
           </TouchableHighlight>
 
       </View>

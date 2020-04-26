@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 
 import ContactThumbnail from "../components/ContactThumbnail";
 import DetailsListItem from "../components/DetailsListItem";
+import { MaterialIcons } from "@expo/vector-icons";
 
 //import { fetchRandomContact } from "../utils/api";
 import colors from "../utils/colors";
@@ -23,13 +24,33 @@ export default class Profile extends Component {
     return {
       title: navigation.state.params.contact.name,
       headerTintColor: "white",
+      headerRight: (
+        <MaterialIcons
+        name="settings"
+        size={32}
+        style={{ color: colors.white }}
+        onPress={() => {
+          navigation.navigate('EditContact', {
+            contactID: navigation.state.params.contact.contactID,
+            contact: navigation.state.params.contact
+          });
+        }}
+      />
+      ),
       headerStyle: {
         backgroundColor: colors.blue
       }
+    
     };
   };
 
   async componentDidMount() {
+    const contact = this.params;
+    console.log(contact);
+    this.setState({ contact });
+  }
+
+  async componentDidUpdate() {
     const contact = this.params;
     console.log(contact);
     this.setState({ contact });
@@ -60,6 +81,8 @@ export default class Profile extends Component {
           <DetailsListItem icon="work" title="Job" subtitle={contact.job} />
           <DetailsListItem icon="school" title="Major" subtitle={contact.major} />
           <DetailsListItem icon="description" title="Other" subtitle={contact.other} />
+          <DetailsListItem icon="description" title="id" subtitle={contact.contactID} />
+
         </View>
       </ScrollView>
     );

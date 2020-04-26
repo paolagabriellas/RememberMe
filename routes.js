@@ -16,6 +16,8 @@ import TagsTab from "./screens/Tags";
 
 import Profile from "./screens/Profile";
 import User from "./screens/User";
+import AddContact from "./components/ContactAddScreen";
+import EditContact from "./components/ContactEditScreen";
 
 import colors from "./utils/colors";
 
@@ -33,6 +35,12 @@ const ContactScreens = createStackNavigator(
     },
     Profile: {
       screen: Profile
+    },
+    AddContact: {
+      screen: AddContact
+    },
+    EditContact: {
+      screen: EditContact
     }
   },
   {
