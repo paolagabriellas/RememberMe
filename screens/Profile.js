@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { Button } from 'react-native-elements';
+import db from '../database/db';
 
 import ContactThumbnail from "../components/ContactThumbnail";
 import DetailsListItem from "../components/DetailsListItem";
@@ -49,6 +51,19 @@ export default class Profile extends Component {
     this.setState({ contact });
   }
 
+  deleteContact(id) {
+    const {
+      navigation: {
+        state: { params }
+      }
+    } = this.props;
+
+    db.deleteContact(id);
+    this.props.navigation.state.params.onNavigateBack;
+    this.props.navigation.goBack();
+
+  }
+
   // async componentDidUpdate() {
   //   const contact = this.params;
   //   // console.log(contact);
@@ -64,8 +79,9 @@ export default class Profile extends Component {
     //console.log(this.props);
     const { contact } = params;
     // const { contact } = this.props.navigation.state.params;
-
+    
     return (
+      
       <ScrollView style={styles.container}>
         <View style={styles.avatarSection}>
           <ContactThumbnail avatar={contact.imagePath} name={contact.name} phone={contact.description} />
@@ -80,8 +96,11 @@ export default class Profile extends Component {
           <DetailsListItem icon="work" title="Job" subtitle={contact.job} />
           <DetailsListItem icon="school" title="Major" subtitle={contact.major} />
           <DetailsListItem icon="description" title="Other" subtitle={contact.other} />
-          <DetailsListItem icon="description" title="id" subtitle={contact.contactID} />
-
+          <Button
+          large
+          leftIcon={{name: 'Delete'}}
+          title='Delete'
+          onPress={() => this.deleteContact(contact.contactID)} />
         </View>
       </ScrollView>
     );
