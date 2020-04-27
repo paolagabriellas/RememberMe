@@ -38,7 +38,7 @@ export default class Input extends React.Component {
         autoCorrect={false}
         value={text}
         placeholder={placeholder}
-        placeholderTextColor="white"
+        placeholderTextColor="black"
         underlineColorAndroid="transparent"
         style={styles.textInput}
         clearButtonMode="always" 
@@ -51,7 +51,7 @@ export default class Input extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:"rgba(0,0,0,0.2)",
+    backgroundColor:"rgba(0,0,0)",
     height:40,
     width:300,
     marginTop:10,
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
   
   textInput:{
     flex: 1,
-    color:"white",
+    color:"black",
   },
 });

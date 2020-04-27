@@ -25,12 +25,12 @@ export default class Profile extends Component {
 
     return {
       title: navigation.state.params.contact.name,
-      headerTintColor: "white",
+      headerTintColor: "black",
       headerRight: (
         <MaterialIcons
         name="settings"
         size={32}
-        style={{ color: colors.white }}
+        style={{ color: 'black' }}
         onPress={() => {
           navigation.navigate('EditContact', {
             contactID: navigation.state.params.contact.contactID
@@ -39,7 +39,7 @@ export default class Profile extends Component {
       />
       ),
       headerStyle: {
-        backgroundColor: colors.blue
+        backgroundColor: 'lightgrey'
       }
     
     };
@@ -96,11 +96,16 @@ export default class Profile extends Component {
           <DetailsListItem icon="work" title="Job" subtitle={contact.job} />
           <DetailsListItem icon="school" title="Major" subtitle={contact.major} />
           <DetailsListItem icon="description" title="Other" subtitle={contact.other} />
+          <View styles = {{padding: 10}}>
           <Button
+          buttonStyle={{
+            backgroundColor:'#e91e63'
+          }}
           large
           leftIcon={{name: 'Delete'}}
           title='Delete'
           onPress={() => this.deleteContact(contact.contactID)} />
+          </View>
         </View>
       </ScrollView>
     );
@@ -116,11 +121,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.blue,
+    backgroundColor: 'lightgrey',
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderTopWidth: 10,
+    borderColor: 'grey'
   },
   detailsSection: {
     flex: 1,
     backgroundColor: 'white',
+    borderWidth: 10,
+    borderColor: 'grey'
   },
 });
 // const styles = StyleSheet.create({

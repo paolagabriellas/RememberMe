@@ -5,6 +5,7 @@ import DB from "../database/db";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import db from '../database/db';
+import {Dimensions} from 'react-native';
 
 export default class ContactEditScreen extends Component {
   static navigationOptions = {
@@ -95,204 +96,254 @@ render() {
         )
       }
       return(
-          <View style={styles.centeredView}>
-
-          <ScrollView style={styles.container}>
-      <Input
-          placeholder="Name"
-          value={this.state.name}
-          onChangeText={(text) => this.updateTextInput(text, 'name')}
-          leftIcon={
-              <Icon
-                name='user'
-                size={24}
-                color='black'
-              />
-            }
-      />
+        <View style={styles.centeredView}>
+           
+        <ScrollView style={styles.container}>
+         <View style={{
+        width: Dimensions.get('window').width*0.6,
+        height: Dimensions.get('window').height * 0.02}}></View>
     <Input
-          placeholder='Description'
-          value={this.state.description}
-          onChangeText={(text) => this.updateTextInput(text, 'description')}
-          leftIcon={
-              <Icon
-                name='question-circle'
-                size={24}
-                color='black'
-              />
-            }
-      />
-    
+        
+        placeholder="Name"
+        placeholderTextColor= 'black'
+        textAlign = 'left'
+        opacity = {0.4}
+        padding = {10}
+        value={this.state.name}
+        onChangeText={(text) => this.updateTextInput(text, 'name')}
+        leftIcon={
+            <Icon
+              name='user'
+              size={24}
+              color='black'
+            />
+          }
+    />
+  <Input
+
+        placeholder='Description'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.description}
+        onChangeText={(text) => this.updateTextInput(text, 'description')}
+        leftIcon={
+            <Icon
+              name='question-circle'
+              size={24}
+              color='black'
+            />
+          }
+    />
+  
+  <Input
+    placeholder='Appearance'
+    placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+    value={this.state.appearance}
+    onChangeText={(text) => this.updateTextInput(text, 'appearance')}
+    leftIcon={
+        <Icon
+        name='eye'
+        size={15}
+        color='black'
+        />
+    }
+/>
+
     <Input
-      placeholder='Appearance'
-      value={this.state.appearance}
-      onChangeText={(text) => this.updateTextInput(text, 'appearance')}
-      leftIcon={
-          <Icon
-          name='eye'
-          size={15}
-          color='black'
-          />
-      }
-  />
+        placeholder='Demeanor'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.demeanor}
+        onChangeText={(text) => this.updateTextInput(text, 'demeanor')}
+        leftIcon={
+        <Icon
+            name='smile-o'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
-      <Input
-          placeholder='Demeanor'
-          value={this.state.demeanor}
-          onChangeText={(text) => this.updateTextInput(text, 'demeanor')}
-          leftIcon={
-          <Icon
-              name='smile-o'
-              size={15}
-              color='black'
-          />
-          }
-      />
+    <Input
+        placeholder='Interests'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.interests}
+        onChangeText={(text) => this.updateTextInput(text, 'interests')}
+        leftIcon={
+        <Icon
+            name='heart-o'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
-      <Input
-          placeholder='Interests'
-          value={this.state.interests}
-          onChangeText={(text) => this.updateTextInput(text, 'interests')}
-          leftIcon={
-          <Icon
-              name='heart-o'
-              size={15}
-              color='black'
-          />
-          }
-      />
+    <Input
+        placeholder='First Met At'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.firstMetAt}
+        onChangeText={(text) => this.updateTextInput(text, 'firstMetAt')}
+        leftIcon={
+        <Icon
+            name='map-marker'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
-      <Input
-          placeholder='First Met At'
-          value={this.state.firstMetAt}
-          onChangeText={(text) => this.updateTextInput(text, 'firstMetAt')}
-          leftIcon={
-          <Icon
-              name='map-marker'
-              size={15}
-              color='black'
-          />
-          }
-      />
+    <Input
+        placeholder='First Met'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.firstMetDate}
+        onChangeText={(text) => this.updateTextInput(text, 'firstMetDate')}
+        leftIcon={
+        <Icon
+            name='calendar'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
-      <Input
-          placeholder='First Met'
-          value={this.state.firstMetDate}
-          onChangeText={(text) => this.updateTextInput(text, 'firstMetDate')}
-          leftIcon={
-          <Icon
-              name='calendar'
-              size={15}
-              color='black'
-          />
-          }
-      />
+    <Input
+        placeholder='Birthday'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.birthday}
+        onChangeText={(text) => this.updateTextInput(text, 'birthday')}
+        leftIcon={
+        <Icon
+            name='birthday-cake'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
-      <Input
-          placeholder='Birthday'
-          value={this.state.birthday}
-          onChangeText={(text) => this.updateTextInput(text, 'birthday')}
-          leftIcon={
-          <Icon
-              name='birthday-cake'
-              size={15}
-              color='black'
-          />
-          }
-      />
+    <Input
+        placeholder='Job'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.job}
+        onChangeText={(text) => this.updateTextInput(text, 'job')}
+        leftIcon={
+        <Icon
+            name='briefcase'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
-      <Input
-          placeholder='Job'
-          value={this.state.job}
-          onChangeText={(text) => this.updateTextInput(text, 'job')}
-          leftIcon={
-          <Icon
-              name='briefcase'
-              size={15}
-              color='black'
-          />
-          }
-      />
+    <Input
+        placeholder='Major'
+        placeholderTextColor= 'black'
+              textAlign = 'left'
+              opacity = {0.4}
+            padding = {10}
+        value={this.state.major}
+        onChangeText={(text) => this.updateTextInput(text, 'major')}
+        leftIcon={
+        <Icon
+            name='graduation-cap'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
-      <Input
-          placeholder='Major'
-          value={this.state.major}
-          onChangeText={(text) => this.updateTextInput(text, 'major')}
-          leftIcon={
-          <Icon
-              name='graduation-cap'
-              size={15}
-              color='black'
-          />
-          }
-      />
-
-      <Input
-          placeholder='Other'
-          value={this.state.other}
-          onChangeText={(text) => this.updateTextInput(text, 'other')}
-          leftIcon={
-          <Icon
-              name='reorder'
-              size={15}
-              color='black'
-          />
-          }
-      />
+    <Input
+    placeholderTextColor= 'black'
+    textAlign = 'left'
+    opacity = {0.4}
+  padding = {10}
+        placeholder='Other'
+        value={this.state.other}
+        onChangeText={(text) => this.updateTextInput(text, 'other')}
+        leftIcon={
+        <Icon
+            name='reorder'
+            size={15}
+            color='black'
+        />
+        }
+    />
 
 
-    <View style={styles.button}>
-      <Button
-        large
-        leftIcon={{name: 'save'}}
-        title='Update'
-        onPress={() => this.updateContact()} />
-    </View>
-  </ScrollView>
+  <View style={{color: '#e91e63', padding : 20}}>
+    <Button
+      buttonStyle={{
+        backgroundColor:'#e91e63'
+      }}
+      leftIcon={{name: 'save'}}
+      title='Save'
+      onPress={() => this.saveContact()} />
   </View>
-      );
-    
+</ScrollView>
+</View>
+    );
+  
 }
 }
 
 const styles = StyleSheet.create({
-  container: {
-      margin: 0,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 30,
-      width: 300,
-      height: 400,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5
-  },
-  subContainer: {
-    flex: 1,
-    marginBottom: 20,
-    padding: 5,
-    borderBottomWidth: 2,
-    borderBottomColor: '#CCCCCC',
-  },
-  activity: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
+container: {
+    margin: 30,
+    backgroundColor: "white",
+    borderRadius: 10,
+    borderWidth: 15,
+    borderColor: 'grey',
+    padding: 25,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
     },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+},
+subContainer: {
+  flex: 0,
+  marginBottom: 10,
+  padding: 5,
+  borderBottomWidth: 2,
+  borderBottomColor: '#CCCCCC',
+},
+activity: {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 12
+  },
 
 })

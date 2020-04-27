@@ -44,7 +44,7 @@ ContactThumbnail.propTypes = {
 ContactThumbnail.defaultProps = {
   name: "",
   phone: "",
-  textColor: "white",
+  textColor: "black",
   onPress: null
 };
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    borderColor: "white",
+    borderColor: "black",
     backgroundColor: "grey",
     borderWidth: 2
   },

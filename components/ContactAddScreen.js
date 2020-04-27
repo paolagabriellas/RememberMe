@@ -5,7 +5,7 @@ import DB from "../database/db";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import db from '../database/db';
-
+import {Dimensions} from 'react-native';
 
 
 export default class ContactAddScreen extends Component {
@@ -67,16 +67,25 @@ saveContact(){
       if (this.state.isLoading){
         return(
             <View style={styles.activity}>
-              <ActivityIndicator size="large" color="#0000ff"/>
+              <ActivityIndicator size="large" color="black"/>
             </View>
+            
           )
         }
         return(
             <View style={styles.centeredView}>
-
+               
             <ScrollView style={styles.container}>
+             <View style={{
+            width: Dimensions.get('window').width*0.6,
+            height: Dimensions.get('window').height * 0.02}}></View>
         <Input
+            color = 'black'
             placeholder="Name"
+            placeholderTextColor= 'black'
+            textAlign = 'left'
+            opacity = {0.4}
+            padding = {10}
             value={this.state.name}
             onChangeText={(text) => this.updateTextInput(text, 'name')}
             leftIcon={
@@ -88,7 +97,12 @@ saveContact(){
               }
         />
       <Input
+
             placeholder='Description'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.description}
             onChangeText={(text) => this.updateTextInput(text, 'description')}
             leftIcon={
@@ -102,6 +116,10 @@ saveContact(){
       
       <Input
         placeholder='Appearance'
+        placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
         value={this.state.appearance}
         onChangeText={(text) => this.updateTextInput(text, 'appearance')}
         leftIcon={
@@ -115,6 +133,10 @@ saveContact(){
 
         <Input
             placeholder='Demeanor'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.demeanor}
             onChangeText={(text) => this.updateTextInput(text, 'demeanor')}
             leftIcon={
@@ -128,6 +150,10 @@ saveContact(){
 
         <Input
             placeholder='Interests'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.interests}
             onChangeText={(text) => this.updateTextInput(text, 'interests')}
             leftIcon={
@@ -141,6 +167,10 @@ saveContact(){
 
         <Input
             placeholder='First Met At'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.firstMetAt}
             onChangeText={(text) => this.updateTextInput(text, 'firstMetAt')}
             leftIcon={
@@ -154,6 +184,10 @@ saveContact(){
 
         <Input
             placeholder='First Met'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.firstMetDate}
             onChangeText={(text) => this.updateTextInput(text, 'firstMetDate')}
             leftIcon={
@@ -167,6 +201,10 @@ saveContact(){
 
         <Input
             placeholder='Birthday'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.birthday}
             onChangeText={(text) => this.updateTextInput(text, 'birthday')}
             leftIcon={
@@ -180,6 +218,10 @@ saveContact(){
 
         <Input
             placeholder='Job'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.job}
             onChangeText={(text) => this.updateTextInput(text, 'job')}
             leftIcon={
@@ -193,6 +235,10 @@ saveContact(){
 
         <Input
             placeholder='Major'
+            placeholderTextColor= 'black'
+                  textAlign = 'left'
+                  opacity = {0.4}
+                padding = {10}
             value={this.state.major}
             onChangeText={(text) => this.updateTextInput(text, 'major')}
             leftIcon={
@@ -205,6 +251,10 @@ saveContact(){
         />
 
         <Input
+        placeholderTextColor= 'black'
+        textAlign = 'left'
+        opacity = {0.4}
+      padding = {10}
             placeholder='Other'
             value={this.state.other}
             onChangeText={(text) => this.updateTextInput(text, 'other')}
@@ -218,10 +268,12 @@ saveContact(){
         />
 
 
-      <View style={styles.button}>
+      <View >
         <Button
+      buttonStyle={{
+        backgroundColor:'#e91e63'
+      }}
           large
-          leftIcon={{name: 'save'}}
           title='Save'
           onPress={() => this.saveContact()} />
       </View>
@@ -234,24 +286,16 @@ saveContact(){
 
 const styles = StyleSheet.create({
     container: {
-        margin: 0,
+        margin: 30,
         backgroundColor: "white",
-        borderRadius: 20,
-        padding: 30,
-        width: 300,
-        height: 400,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
+        borderRadius: 10,
+        borderWidth: 15,
+        borderColor: 'grey',
+        padding: 25,
     },
     subContainer: {
-      flex: 1,
-      marginBottom: 20,
+      flex: 0,
+      marginBottom: 10,
       padding: 5,
       borderBottomWidth: 2,
       borderBottomColor: '#CCCCCC',
@@ -269,7 +313,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 12
       },
+
+      Button: {
+          backgroundColor: 'red'
+      }
 
   })

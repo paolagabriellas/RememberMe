@@ -81,12 +81,15 @@ class FlatListDemo extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <FlatList
+        <FlatList  
           data={this.state.data}
           renderItem={({ item }) => (
-            <ListItem
-              leftAvatar={{ backgroundColor:"grey"}}
+            <ListItem style = {{backgroundColor : 'grey', borderWidth: 10, borderColor: 'white'}}
+           //badge = {{color: 'grey'}}
+           chevron={{ color: 'grey' }}
+              leftAvatar={{ backgroundColor:"darkgrey", borderColor: 'black', borderWidth: 1}}
               title={`${item.name}`}
+              containerStyle={{backgroundColor:"lightgrey"}}
               subtitle={item.description}
               onPress={() =>
                   this.props.navigation.navigate("Profile", { contact: item})}
