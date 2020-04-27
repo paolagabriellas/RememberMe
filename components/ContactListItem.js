@@ -38,37 +38,42 @@ ContactListItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 16,
+    paddingLeft: 10,
+    borderWidth: 8,
+    borderColor: 'white',
+    backgroundColor: 'lightgrey'
   },
   contactInfo: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    paddingTop: 16,
+    paddingTop: 10,
     paddingRight: 24,
     paddingBottom: 16,
     borderBottomColor: colors.grey,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   avatar: {
-    backgroundColor: "grey",
-    borderRadius: 22,
-    width: 44,
-    height: 44
+    backgroundColor: "darkgrey",
+    borderRadius: 44,
+    borderWidth: 1,
+    borderColor: 'black',
+    width: 40,
+    height: 40
   },
   details: {
     justifyContent: "center",
     flex: 1,
-    marginLeft: 20
+    marginLeft: 30
   },
   title: {
     color: colors.black,
     fontWeight: "bold",
-    fontSize: 16
+    fontSize: 20
   },
   subtitle: {
-    color: colors.blue,
+    color: colors.black,
     fontSize: 15,
-    marginTop: 4
+    marginTop: 10
   }
 });

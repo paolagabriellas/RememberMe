@@ -18,14 +18,14 @@ export default class User extends React.Component {
       <MaterialIcons
         name="menu"
         size={24}
-        style={{ color: "white", marginLeft: 10 }}
+        style={{ color: "black", marginLeft: 10 }}
       />
     ),
     headerRight: (
       <MaterialIcons
         name="settings"
         size={24}
-        style={{ color: "white", marginRight: 10 }}
+        style={{ color: "black", marginRight: 10 }}
         onPress={() => navigate("Options")}
       />
     )
